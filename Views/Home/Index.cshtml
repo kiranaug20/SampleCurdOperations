@@ -1,0 +1,61 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+}
+
+<div class="text-center">
+    <h1 class="display-4">Welcome</h1>
+</div>
+
+
+@model IEnumerable<MUser>
+
+@{
+    Layout = "_Layout";
+    var title = "READ UserDetails";
+    ViewData["Title"] = title;
+}
+
+<h2>@title</h2>
+
+<h3><a asp-action="Create" class="btn btn-sm btn-secondary">Create</a></h3>
+<table class="table table-bordered table-sm table-striped">
+    <thead>
+        <tr><th>Id</th>
+            <th>FirstName</th>
+            <th>LastName</th>
+            <th>Emial</th>
+            <th>MobileNumar</th>
+            <th>Address</th>
+            <th>DOB</th>
+            <th>Update</th>
+            <th>Delete</th>
+        </tr>
+    </thead>
+    <tbody>
+        @if (Model == null)
+        {
+            <tr><td colspan="7" class="text-center">No Model Data</td></tr>
+        }
+        else
+        {
+            @foreach (var p in Model)
+            {
+                <tr>
+                    <td>@p.Id</td>
+                    <td>@p.FirstName</td>
+                    <td>@p.LastName</td>
+                    <td>@p.Email</td>
+                    <td>@p.MobileNumber</td>
+                    <td>@p.Address</td>
+                    <td>@string.Format("{0:dddd, dd MMMM yyyy}", p.DOB)</td>
+                    <td><a asp-action="Update" asp-route-id="@p.Id">Update</a></td>
+                    <td>
+                        <form asp-action="Delete" method="post" asp-route-id="@p.Id">
+                            <button>Delete</button>
+                        </form>
+                    </td>
+                </tr>
+            }
+        }
+    </tbody>
+</table>
